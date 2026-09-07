@@ -9,6 +9,8 @@
 include <params.scad>
 $fn = 48;
 
+CHECK = 0;   // -D CHECK=1 renders the interference test instead
+
 // --- sled-specific ----------------------------------------------------------
 PLATE_T   = 3.00;   // plate thickness
 EDGE      = 7.00;   // margin from board to plate edge
@@ -50,13 +52,18 @@ module rrect(w, d, h, r) {
     hull() for (x = [r, w-r], y = [r, d-r]) translate([x, y, 0]) cylinder(h=h, r=r);
 }
 
-// One corner bracket. sx/sy are +1 or -1 and point into the pocket.
+// One corner bracket. (x,y) is the pocket corner; sx/sy are +1/-1 and point
+// INTO the pocket, so the wall thickness has to go the other way -- outward.
+// Getting that backwards silently shrinks every pocket by CLIP_T per side.
 module corner_clip(x, y, sx, sy, h) {
+    ox = sx > 0 ? -CLIP_T   : 0;    // thickness, outboard of the pocket edge
+    oy = sy > 0 ? -CLIP_T   : 0;
+    lx = sx > 0 ? 0 : -CLIP_LEG;    // leg, running along the pocket edge
+    ly = sy > 0 ? 0 : -CLIP_LEG;
     translate([x, y, 0]) {
-        translate([sx > 0 ? 0 : -CLIP_T, sy > 0 ? 0 : -CLIP_LEG, 0])
-            cube([CLIP_T, CLIP_LEG, h]);
-        translate([sx > 0 ? 0 : -CLIP_LEG, sy > 0 ? 0 : -CLIP_T, 0])
-            cube([CLIP_LEG, CLIP_T, h]);
+        translate([ox, ly, 0]) cube([CLIP_T,   CLIP_LEG, h]);   // leg along Y
+        translate([lx, oy, 0]) cube([CLIP_LEG, CLIP_T,   h]);   // leg along X
+        translate([ox, oy, 0]) cube([CLIP_T,   CLIP_T,   h]);   // knit the corner
     }
 }
 
@@ -107,7 +114,7 @@ module sled() {
             translate([p[0], p[1], -1]) cylinder(h = PLATE_T + 2, d = SCREW_CLEAR);
 
         // zip-tie slots: two straps over the cell, one over the ESP32
-        for (y = [CELL_Y0 + 8, CELL_Y1 - 8])
+        for (y = [CELL_Y0 + CLIP_LEG + 2, CELL_Y1 - CLIP_LEG - 2])
             for (x = [CELL_X0 - 3, CELL_X1 + 3]) tie_slot(x, y);
         for (x = [ESP_X0 - 3, ESP_X1 + 3]) tie_slot(x, (ESP_Y0 + ESP_Y1)/2);
 
@@ -119,7 +126,33 @@ module sled() {
     }
 }
 
-sled();
+// ---------------------------------------------------------------------------
+//  Interference check.  Intersects the printed part with the volume each
+//  component actually occupies. A correct sled produces NOTHING here.
+//      ./check.sh
+// ---------------------------------------------------------------------------
+// The board, grown by half its nominal clearance. Anything of the sled found
+// inside this has eaten more than half the fit tolerance -- that's a fault.
+// Growing by the full FIT would just graze the clip faces and false-alarm.
+CHK = FIT * 0.5;
+module occupies(x0, y0, x1, y1, z0, z1) {
+    translate([x0 - CHK, y0 - CHK, z0]) cube([x1-x0 + 2*CHK, y1-y0 + 2*CHK, z1-z0]);
+}
+module interference() {
+    intersection() {
+        sled();
+        union() {
+            occupies(ESP_X0, ESP_Y0, ESP_X1, ESP_Y1,
+                     PLATE_T + ESP_UNDER + 0.01, PLATE_T + ESP_UNDER + ESP_T);
+            occupies(CELL_X0, CELL_Y0, CELL_X1, CELL_Y1,
+                     PLATE_T + 0.01, PLATE_T + CELL_T);
+            occupies(MOD_X0, MOD_Y0, MOD_X1, MOD_Y1,
+                     PLATE_T + MOD_UNDER + 0.01, PLATE_T + MOD_UNDER + MOD_T);
+        }
+    }
+}
+
+if (CHECK == 1) interference(); else sled();
 
 echo(str("SLED plate  ", PX, " x ", PY, " x ", PLATE_T, " mm"));
 echo(str("tallest printed feature  ", max(CELL_CLIP_H, ESP_CLIP_H), " mm"));

@@ -41,6 +41,7 @@ all (the 6-digit number on a LiPo pouch *is* its dimensions: `503450` = 5.0 ×
 | `measure.sh` | walks you through each dimension, validates the range, rewrites `params.scad` |
 | `render.sh` | preview PNGs from any `.scad` **or `.stl`** |
 | `build.sh` | renders every part to `exports/` |
+| `check.sh` | interference test — does any printed geometry sit where a component has to go? |
 | `MEASURING.md` | how to get the numbers |
 
 ### `measure.sh`
@@ -69,6 +70,28 @@ Works on anything, including STLs you downloaded from Makerworld:
 
 Schemes: `Tomorrow Cornfield DeepOcean Starnight Nature BeforeDawn Monotone`.
 An STL gets wrapped in a throwaway `.scad` so OpenSCAD can frame a camera on it.
+
+### `check.sh`
+
+Intersects the sled with each component's volume, grown by half its nominal
+clearance. A correct part encloses **zero volume** there.
+
+```bash
+./check.sh      # PASS / FAIL
+```
+
+This caught a real bug: the corner brackets were being built *inside* each
+pocket instead of outside it, shrinking every pocket by 3.2 mm in both axes.
+The ESP32 and the cell would not have dropped in.
+
+What it can and can't do:
+
+- **Catches** geometry that collides with a component — brackets on the wrong
+  side, a standoff reaching into the next bay, a zip-tie slot cutting a
+  bracket's base.
+- **Cannot catch a wrong measurement.** The pockets derive from `params.scad`,
+  so if a number is wrong the pocket is wrong *and consistent*, and the check
+  passes happily. Only a real dry fit finds those.
 
 ---
 
