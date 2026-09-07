@@ -34,8 +34,10 @@ CELL_LEAD  = 60.00;   // G  usable length of the JST lead
 ESP_L      = 54.40;   // D  long edge of the PCB                  (datasheet)
 ESP_W      = 27.90;   // D  short edge of the PCB                 (datasheet)
 ESP_T      =  1.60;   // G  PCB thickness
-ESP_UNDER  =  3.00;   // G  solder tails under the board. !! If male breadboard
-                      //    pins point DOWN this is ~11, not 3. Check first.
+ESP_UNDER  =  3.00;   // M  Jesse confirmed 2026-09-06: underside is FLAT, no
+                      //    downward breadboard pins. 3.00 is a safe over-
+                      //    estimate of the clipped solder tails, so this is
+                      //    no longer fit-critical - extra clearance is free.
 ESP_OVER   =  6.00;   // G  bare board. With headers fitted ~14.
 
 // --- print + fastener preferences ------------------------------------------

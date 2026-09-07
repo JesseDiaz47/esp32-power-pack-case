@@ -8,7 +8,7 @@ Two parts, printed in this order on purpose:
 
 | | what it is | size (mm) | why |
 |---|---|---|---|
-| **`sled.scad`** | open plate, no walls, no lid | 70 × 124 × 3 | **Print this first.** No ports means nothing can be wrong about port positions. It proves the numbers. |
+| **`sled.scad`** | open plate + 2 bolt-on rails | 76 × 129.9 × 3 | **Print this first.** No ports means nothing can be wrong about port positions. It proves the numbers. |
 | **`case.scad`** | enclosed tray + lid | 72.8 × 117.8 × 19.4 | Print once the sled says the numbers are right. |
 
 All three STLs render manifold. `exports/` is current.
@@ -99,24 +99,50 @@ What it can and can't do:
 
 ## The sled
 
+Black hex-lightened deck, burnt-orange bolt-on side rails, screws left showing —
+the same direction the ESP32 Cyberdeck Case concept already approved.
+
 ```
-  .-------------------------.
-  | o  ESP32 54.4 x 27.9 o  |   corner brackets + one zip tie
-  |                         |
-  | ==   cell  50 x 34   == |   corner brackets + two zip ties
-  |                         |
-  | o   module 56 x 40   o  |   four M3 screws on the 48 x 32 pattern
-  '-------------------------'
-     o = mounting hole through the plate
+  #===========================#
+  #|  o   module 56 x 40  o  |#   four M3 on the 48 x 32 pattern
+  #|      hex cut through     |#
+  #|-------------------------|#
+  #|      cell 50 x 34        |#   brackets + two zip ties
+  #|      hex ENGRAVED only   |#
+  #|-------------------------|#
+  #|  ESP32 54.4 x 27.9      |#   brackets + one zip tie
+  #|      hex cut through     |#
+  #===========================#
+     # = orange rail, 3 exposed M3 a side
 ```
 
-Plate 70 × 124 × 3 mm. Tallest printed feature 10 mm. Assembled envelope
-70 × 124 × 17.1 mm. Bay labels are engraved so the dry fit is unambiguous.
+| part | size (mm) | qty | colour |
+|---|---|---|---|
+| plate | 76 × 129.9 × 3 | 1 | black |
+| rail | 8 × 129.9 × 3.5 | **2** | burnt orange |
 
-Prints flat, no supports, ~1/3 the filament of the enclosed case.
+Tallest feature 10 mm. Assembled envelope 76 × 129.9 × 17.1 mm.
 
-**Hardware:** 4 × M3 × 8 self-tapping (module → standoffs), 3–5 zip ties,
-optionally 4 × M3 through the corner holes to bolt the sled to something.
+**Three deliberate choices:**
+
+- **Chamfers, 1 mm top and bottom.** More than anything else, a chamfered edge
+  is what stops a part reading as 3D printed. It also kills elephant's foot.
+- **Only whole hexes are placed.** A hex is drawn solely if the entire cell
+  clears the zone and every feature. Clipping a hex field against keepouts
+  instead leaves half-eaten slivers, which read as damage.
+- **The cell bay is engraved, not cut.** A pouch cell needs continuous support,
+  so it gets the same grid 0.6 mm deep. The panel stays one system without
+  putting holes under the battery.
+
+Prints flat, no supports — every overhang is a 45° chamfer or steeper.
+
+**Hardware:** 4 × M3 × 8 self-tapping (module → standoffs), 6 × M3 × 8
+self-tapping (rails → plate, countersunk), 3 zip ties. If you'd rather bolt the
+whole sled to something, open the plate's six holes to 3.4 mm and run M3 with
+nuts instead.
+
+**Making it look right:** the rails are a separate print, so no AMS or filament
+change is needed — just print the plate in black and the two rails in orange.
 
 ---
 
