@@ -23,6 +23,7 @@ TIE_W     = 4.20;   // zip-tie slot
 TIE_H     = 2.40;
 POST_OD   = 6.00;
 LABEL_D   = 0.60;   // engraving depth
+TIE_OFF   = FIT + CLIP_T + TIE_W/2 + 0.8;   // clear of the bracket footprint
 
 // --- derived ----------------------------------------------------------------
 PX = MOD_L + 2*EDGE;
@@ -115,8 +116,8 @@ module sled() {
 
         // zip-tie slots: two straps over the cell, one over the ESP32
         for (y = [CELL_Y0 + CLIP_LEG + 2, CELL_Y1 - CLIP_LEG - 2])
-            for (x = [CELL_X0 - 3, CELL_X1 + 3]) tie_slot(x, y);
-        for (x = [ESP_X0 - 3, ESP_X1 + 3]) tie_slot(x, (ESP_Y0 + ESP_Y1)/2);
+            for (x = [CELL_X0 - TIE_OFF, CELL_X1 + TIE_OFF]) tie_slot(x, y);
+        for (x = [ESP_X0 - TIE_OFF, ESP_X1 + TIE_OFF]) tie_slot(x, (ESP_Y0 + ESP_Y1)/2);
 
         // engraved bay labels, readable during the dry fit
         label(PX/2, (ESP_Y0  + ESP_Y1)/2,  "ESP32",  6);

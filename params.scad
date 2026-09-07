@@ -5,7 +5,10 @@
 //      ./measure.sh
 //  which walks you through each one and rewrites this file.
 //
-//  status:  M = measured with calipers      G = still a guess
+//  status:  M = measured with calipers   D = datasheet   G = still a guess
+//
+//  Board is an ESP32-WROOM-32 DevKitC-V4 (38-pin, CP2102), the same one as
+//  ~/Code/quadruped-r1 -- see that project's controller/docs/MEASUREMENTS.md
 // ============================================================================
 
 // --- NULLLAB LiPo module ----------------------------------------------------
@@ -25,11 +28,15 @@ CELL_T     =  5.50;   // G  /  see the decoder in MEASURING.md
 CELL_LEAD  = 60.00;   // G  usable length of the JST lead
 
 // --- ESP32 dev board --------------------------------------------------------
-ESP_L      = 51.00;   // G  from the Cyberdeck graybox fit basis
-ESP_W      = 28.00;   // G
-ESP_T      =  1.60;   // G
-ESP_UNDER  =  3.00;   // G  solder tails / pin stubs under the board
-ESP_OVER   =  6.00;   // G  bare board. With headers this is ~14.
+//  ESP32-WROOM-32 DevKitC-V4, 38-pin, CP2102. Same board as ~/Code/quadruped-r1;
+//  footprint below matches that project's MEASUREMENTS.md row 17, which is the
+//  Espressif DevKitC-32E datasheet nominal. Neither is caliper-verified yet.
+ESP_L      = 54.40;   // D  long edge of the PCB                  (datasheet)
+ESP_W      = 27.90;   // D  short edge of the PCB                 (datasheet)
+ESP_T      =  1.60;   // G  PCB thickness
+ESP_UNDER  =  3.00;   // G  solder tails under the board. !! If male breadboard
+                      //    pins point DOWN this is ~11, not 3. Check first.
+ESP_OVER   =  6.00;   // G  bare board. With headers fitted ~14.
 
 // --- print + fastener preferences ------------------------------------------
 FIT         =   0.50;   // M  clearance around each board

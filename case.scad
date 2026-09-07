@@ -4,7 +4,7 @@
 //  Holds three things in one flat tray:
 //    1. NULLLAB LiPo module  (USB-C in, USB-A + 3V3/5V out, 4-LED gauge)
 //    2. a 1200 mAh LiPo pouch cell
-//    3. Jesse's 38-pin USB-C ESP32 dev board (51 x 28 mm)
+//    3. an ESP32-WROOM-32 DevKitC-V4 (38-pin, 54.4 x 27.9 mm)
 //
 //  EVERY number marked [MEASURE] is a guess until calipers say otherwise.
 //  Change the number, re-run build.sh. Nothing downstream is hardcoded.

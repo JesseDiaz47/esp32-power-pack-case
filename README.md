@@ -1,7 +1,8 @@
 # ESP32 Power Pack Case
 
 Mounts the **NULLLAB LiPo module** (1200 mAh, USB‑C in, USB‑A + 3V3/5V out,
-4‑LED gauge), its **LiPo pouch cell**, and a **51 × 28 mm ESP32** board.
+4‑LED gauge), its **LiPo pouch cell**, and an **ESP32‑WROOM‑32 DevKitC‑V4**
+(38‑pin, 54.4 × 27.9 mm) — the same board as `~/Code/quadruped-r1`.
 
 Two parts, printed in this order on purpose:
 
@@ -35,7 +36,7 @@ all (the 6-digit number on a LiPo pouch *is* its dimensions: `503450` = 5.0 ×
 
 | | |
 |---|---|
-| `params.scad` | **The only file with real-world measurements in it.** Everything else derives from it. |
+| `params.scad` | **The only file with real-world measurements in it.** Everything else derives from it. Each value is tagged `M` measured / `D` datasheet / `G` guess. |
 | `sled.scad` | Option D, the open fit-test plate |
 | `case.scad` | the enclosed tray + lid |
 | `measure.sh` | walks you through each dimension, validates the range, rewrites `params.scad` |
@@ -52,8 +53,9 @@ all (the 6-digit number on a LiPo pouch *is* its dimensions: `503450` = 5.0 ×
 ./measure.sh -l       # what's still a guess
 ```
 
-Enter keeps the current value. Anything you type gets marked `M` (measured) in
-`params.scad`; untouched values stay `G` (guess). Each parameter has a sane
+Enter keeps the current value. Anything you type gets marked `M` (measured);
+`D` means sourced from a datasheet, `G` means still a guess. Edits are made in
+place, so hand-written notes in `params.scad` survive a run. Each parameter has a sane
 range — type a cell thickness of 50 mm and it stops you rather than silently
 producing a 54 mm tall clip.
 
@@ -99,7 +101,7 @@ What it can and can't do:
 
 ```
   .-------------------------.
-  | o   ESP32  51 x 28   o  |   corner brackets + one zip tie
+  | o  ESP32 54.4 x 27.9 o  |   corner brackets + one zip tie
   |                         |
   | ==   cell  50 x 34   == |   corner brackets + two zip ties
   |                         |
@@ -120,9 +122,24 @@ optionally 4 × M3 through the corner holes to bolt the sled to something.
 
 ## What's still a guess
 
-`./measure.sh -l` is authoritative. As of now the module footprint (56 × 40,
-48 × 32 hole pattern) is solid — it came straight off the listing photo. Every
-Z dimension and the entire cell size are assumptions.
+`./measure.sh -l` is authoritative.
+
+**Solid:** the module footprint (56 × 40, 48 × 32 hole pattern), straight off
+the listing photo.
+
+**Datasheet, not calipers:** the ESP32 footprint, 54.4 × 27.9 mm. That is the
+Espressif DevKitC‑32E nominal, matching row 17 of
+`~/Code/quadruped-r1/controller/docs/MEASUREMENTS.md`.
+
+> **Note for the ESP32 Cyberdeck Case project:** it builds its pocket around
+> 51 × 28 mm for what it calls the same 38‑pin board. A real 38‑pin DevKitC is
+> 54.4 mm long. That pocket is likely 3.4 mm short.
+
+**Still guesses:** every Z dimension, and the entire cell size.
+
+`ESP_UNDER` is the one to watch. It assumes 3 mm of solder tail. If your
+DevKitC has male breadboard pins pointing **down**, the real figure is nearer
+11 mm and the ESP32 brackets are wrong — tell `measure.sh` and it rebuilds.
 
 The enclosed case additionally guesses **port positions**, scaled off the
 listing photo at 7.4 px/mm, so ±1.5 mm. Two consequences already baked in:
