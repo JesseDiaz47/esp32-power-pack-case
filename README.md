@@ -1,110 +1,123 @@
 # ESP32 Power Pack Case
 
-A single flat tray + lid holding the **NULLLAB LiPo module** (1200 mAh, USB‑C in,
-USB‑A + 3V3/5V out, 4‑LED gauge), its **LiPo pouch cell**, and Jesse's **38‑pin
-USB‑C ESP32** board.
+Mounts the **NULLLAB LiPo module** (1200 mAh, USB‑C in, USB‑A + 3V3/5V out,
+4‑LED gauge), its **LiPo pouch cell**, and a **51 × 28 mm ESP32** board.
 
-**Status: v0.1 fit test.** Print it, check the fit, change numbers, re-run. It is
-not validated hardware.
+Two parts, printed in this order on purpose:
 
-## Current size
+| | what it is | size (mm) | why |
+|---|---|---|---|
+| **`sled.scad`** | open plate, no walls, no lid | 70 × 124 × 3 | **Print this first.** No ports means nothing can be wrong about port positions. It proves the numbers. |
+| **`case.scad`** | enclosed tray + lid | 72.8 × 117.8 × 19.4 | Print once the sled says the numbers are right. |
 
-| | mm |
-|---|---:|
-| Base | 72.8 × 117.8 × 17.0 |
-| Lid | 72.8 × 117.8 × 2.4 |
-| Assembled | 72.8 × 117.8 × 19.4 |
+All three STLs render manifold. `exports/` is current.
 
-Both STLs render manifold (base genus 3, lid genus 17 — holes and vents).
+---
 
-## Layout
-
-Three bays front → back, all on one level, no stacking:
-
-```
-  front wall ── ESP32 USB-C cutout
-  ┌──────────────────────────────┐
-  │  ESP32 51×28  on end rails   │
-  ├─── open wire channel ────────┤
-  │  LiPo cell 50×34  in ribs    │
-  ├─── open wire channel ────────┤
-  │  NULLLAB module 56×40        │  ← USB-C + switch out the LEFT wall
-  └──────────────────────────────┘  ← USB-A out the BACK wall
-```
-
-Bays are open to each other so wires route freely. The 4‑LED gauge reads through
-a window in the lid.
-
-## Where the numbers came from
-
-**Solid — read straight off the listing photo:**
-
-| | mm |
-|---|---:|
-| Module PCB | 56.00 × 40.00 |
-| Mounting hole pattern | 48.00 × 32.00 |
-| Hole diameter | 4.70 (the photo's third callout) |
-
-**Guessed — marked `[MEASURE]` in `case.scad`:**
-
-| Parameter | Assumed | Why it's a guess |
-|---|---:|---|
-| `CELL_L/W/T` | 50 × 34 × 5.5 | **Biggest unknown.** The photo dimensions the *module*, not the cell. 503450 is the common 1200 mAh pouch. |
-| `MOD_OVER` | 9.5 | Tallest part on top. USB‑A shell is ~6.5, JST ~6. No Z data in the photo. |
-| `MOD_T` | 1.6 | Standard PCB, assumed. |
-| `MOD_UNDER` | 3.0 | Solder-tail clearance under the module. |
-| `ESP_L/W` | 51 × 28 | From the ESP32 Cyberdeck Case graybox fit basis. |
-| `ESP_OVER` | 6.0 | Bare board. **Raise to ~14 if you're using headers.** |
-
-**Port X/Y positions** (`USBA_C`, `PORTW_C`, `LED_X/Y`) were scaled off the
-listing photo at ~7.4 px/mm, so carry roughly ±1.5 mm. Every cutout is
-deliberately oversized to absorb that.
-
-Two known consequences of that uncertainty:
-
-- The USB‑C and ON/OFF switch are ~12 mm apart on the module's left edge. Two
-  separate cutouts would leave a 0.9 mm rib — too thin to print — so they are
-  **one combined port window**.
-- The USB‑A is cut as **edge‑facing**. If yours is a vertical up‑facing part,
-  the cutout moves to the lid instead.
-
-## Measure these five, then re-run
-
-1. **Cell** L × W × T → `CELL_L`, `CELL_W`, `CELL_T`
-2. **Tallest component on the module** (USB‑A shell) → `MOD_OVER`
-3. **Module PCB thickness** → `MOD_T`
-4. **ESP32 stack height** — bare or with headers → `ESP_OVER`
-5. **Module left edge**: distance from the back edge to the USB‑C and to the
-   switch → `PORTW_C`, `PORTW_L`
+## Start here
 
 ```bash
-./build.sh
+./measure.sh -q      # the 5 numbers that change the print
+./build.sh           # re-render every STL
 ```
 
-Everything else in `case.scad` is derived. Change a bay dimension and the shell,
-bosses, standoffs and cutouts all move with it.
+Then print `exports/ESP32-PowerPack-sled.stl`, bolt the three parts down, and
+find out what's wrong before committing to an enclosure.
 
-## Hardware
+Read [MEASURING.md](MEASURING.md) first — it has the caliper technique for the
+awkward measurements, and the trick that gets the cell size without calipers at
+all (the 6-digit number on a LiPo pouch *is* its dimensions: `503450` = 5.0 ×
+34 × 50 mm).
 
-- 6 × M3 self-tapping screws, ~10–12 mm, lid → base (2.5 mm pilots, 3.4 mm
-  clearance + counterbore in the lid)
-- 4 × M3 screws, ~6 mm, module → standoffs (works whether the board holes are
-  3.2 or 4.7 mm — the head retains either way)
+---
 
-## Print notes
+## Files
 
-- Base prints flat on its floor, **no supports**. The wall cutouts bridge over a
-  16 mm span at most.
-- Lid prints flat.
-- 0.2 mm layers, 3 perimeters, 20% infill is plenty.
+| | |
+|---|---|
+| `params.scad` | **The only file with real-world measurements in it.** Everything else derives from it. |
+| `sled.scad` | Option D, the open fit-test plate |
+| `case.scad` | the enclosed tray + lid |
+| `measure.sh` | walks you through each dimension, validates the range, rewrites `params.scad` |
+| `render.sh` | preview PNGs from any `.scad` **or `.stl`** |
+| `build.sh` | renders every part to `exports/` |
+| `MEASURING.md` | how to get the numbers |
 
-## Before calling it final
+### `measure.sh`
 
-1. Print the base only and dry-fit all three parts before printing the lid.
+```bash
+./measure.sh          # everything
+./measure.sh -q       # only the 5 that matter
+./measure.sh -l       # what's still a guess
+```
+
+Enter keeps the current value. Anything you type gets marked `M` (measured) in
+`params.scad`; untouched values stay `G` (guess). Each parameter has a sane
+range — type a cell thickness of 50 mm and it stops you rather than silently
+producing a 54 mm tall clip.
+
+### `render.sh`
+
+Works on anything, including STLs you downloaded from Makerworld:
+
+```bash
+./render.sh sled.scad                      # iso, top, front, right
+./render.sh exports/anything.stl -v all    # all 7 views
+./render.sh sled.scad -t 24                # 24-frame turntable
+./render.sh sled.scad -s 2400x1800 -c Monotone
+```
+
+Schemes: `Tomorrow Cornfield DeepOcean Starnight Nature BeforeDawn Monotone`.
+An STL gets wrapped in a throwaway `.scad` so OpenSCAD can frame a camera on it.
+
+---
+
+## The sled
+
+```
+  .-------------------------.
+  | o   ESP32  51 x 28   o  |   corner brackets + one zip tie
+  |                         |
+  | ==   cell  50 x 34   == |   corner brackets + two zip ties
+  |                         |
+  | o   module 56 x 40   o  |   four M3 screws on the 48 x 32 pattern
+  '-------------------------'
+     o = mounting hole through the plate
+```
+
+Plate 70 × 124 × 3 mm. Tallest printed feature 10 mm. Assembled envelope
+70 × 124 × 17.1 mm. Bay labels are engraved so the dry fit is unambiguous.
+
+Prints flat, no supports, ~1/3 the filament of the enclosed case.
+
+**Hardware:** 4 × M3 × 8 self-tapping (module → standoffs), 3–5 zip ties,
+optionally 4 × M3 through the corner holes to bolt the sled to something.
+
+---
+
+## What's still a guess
+
+`./measure.sh -l` is authoritative. As of now the module footprint (56 × 40,
+48 × 32 hole pattern) is solid — it came straight off the listing photo. Every
+Z dimension and the entire cell size are assumptions.
+
+The enclosed case additionally guesses **port positions**, scaled off the
+listing photo at 7.4 px/mm, so ±1.5 mm. Two consequences already baked in:
+
+- USB‑C and the ON/OFF switch are ~12 mm apart, which would leave a 0.9 mm rib
+  between two cutouts — too thin to print. They share **one port window**.
+- The USB‑A is cut **edge‑facing**. If yours points up, that cutout moves to
+  the lid.
+
+Neither applies to the sled. That's the point of the sled.
+
+---
+
+## Before trusting the enclosed case
+
+1. Print the sled. Dry-fit all three parts. Fix `params.scad`.
 2. Confirm USB‑C **cable body** clearance, not just the connector.
-3. Confirm the cell's JST lead actually reaches the module's back-edge connector
-   — it's ~45 mm of routing. If the lead is short, swap the `ESP32` and `cell`
-   bay order.
+3. Confirm the cell's JST lead reaches the module's back-edge connector —
+   it's ~45 mm of routing.
 4. Confirm the USB‑A is edge-facing, not vertical.
-5. Add strain relief or a retention pad over the cell before trusting it to move
-   around.
+5. Print the base alone before committing to the lid.
