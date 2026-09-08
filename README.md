@@ -41,28 +41,24 @@ All three STLs render manifold. `exports/` is current.
   <sub><b>Populated.</b> The NULLLAB module carries its cell; the ESP32 sits in its own bay.</sub>
 </td>
 <td width="50%" align="center">
-  <a href="photos/06-sled-printed-beside-case.jpg"><img src="photos/06-sled-printed-beside-case.jpg" width="420" alt="The printed sled beside the case"></a><br>
+  <a href="photos/05-sled-printed-beside-case.jpg"><img src="photos/05-sled-printed-beside-case.jpg" width="420" alt="The printed sled beside the case"></a><br>
   <sub><b>The sled, printed.</b> Hex‑lightened deck, zones engraved <code>MODULE</code> / <code>CELL</code> / <code>ESP32</code>, marked <code>v0.2</code> — printed in one colour rather than black deck + orange rails.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
-  <a href="photos/07-case-on-sled.jpg"><img src="photos/07-case-on-sled.jpg" width="420" alt="The case resting on the sled"></a><br>
-  <sub><b>Case on sled.</b> The sled is the larger footprint of the two — 76 × 129.9 mm against the case's 72.8 × 117.8.</sub>
+  <a href="photos/06-tray-populated-top-down.jpg"><img src="photos/06-tray-populated-top-down.jpg" width="420" alt="All three bays filled, top down"></a><br>
+  <sub><b>All three bays filled.</b> The NULLLAB module with its cell, the ESP32, and an <code>HW‑131</code> breadboard supply — barrel‑jack in, USB‑A and 3V3/5V rails out. The HW‑131 is not in <code>params.scad</code>.</sub>
 </td>
 <td width="50%" align="center">
-  <a href="photos/08-esp32-devkitc-board.jpg"><img src="photos/08-esp32-devkitc-board.jpg" width="420" alt="ESP32-WROOM-32 DevKitC"></a><br>
+  <a href="photos/07-esp32-devkitc-board.jpg"><img src="photos/07-esp32-devkitc-board.jpg" width="420" alt="ESP32-WROOM-32 DevKitC"></a><br>
   <sub><b>The board.</b> ESP32‑WROOM‑32 DevKitC, 38‑pin. Underside is flat — no downward breadboard pins, which is what <code>ESP_UNDER</code> assumes.</sub>
 </td>
 </tr>
 <tr>
-<td width="50%" align="center">
-  <a href="photos/09-lipo-module-with-cell.jpg"><img src="photos/09-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
+<td colspan="2" align="center">
+  <a href="photos/08-lipo-module-with-cell.jpg"><img src="photos/08-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
   <sub><b>The pack.</b> NULLLAB LiPo module with the pouch cell — USB‑C in, USB‑A + 3V3/5V out, 4‑LED gauge. The cell is stamped <code>JBC 103040PL</code>.</sub>
-</td>
-<td width="50%" align="center">
-  <a href="photos/05-tray-populated-top-down.jpg"><img src="photos/05-tray-populated-top-down.jpg" width="420" alt="All three bays filled, top down"></a><br>
-  <sub><b>All three bays filled.</b> The NULLLAB module with its cell, the ESP32, and an <code>HW‑131</code> breadboard supply — barrel‑jack in, USB‑A and 3V3/5V rails out. The HW‑131 is not in <code>params.scad</code>.</sub>
 </td>
 </tr>
 </table>
@@ -72,8 +68,8 @@ All three STLs render manifold. `exports/` is current.
 One plate, four parts, Bambu Textured PEI.
 
 <p align="center">
-  <a href="photos/10-plate-layout.png">
-    <img src="photos/10-plate-layout.png" width="720" alt="All four parts nested on one plate in Bambu Studio">
+  <a href="photos/09-plate-layout.png">
+    <img src="photos/09-plate-layout.png" width="720" alt="All four parts nested on one plate in Bambu Studio">
   </a>
 </p>
 
