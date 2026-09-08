@@ -1,5 +1,9 @@
 # License — models, renders and photos
 
+> **Scope.** [`LICENSE`](LICENSE) (MIT) covers the *source*: the OpenSCAD
+> files (`*.scad`), the shell scripts (`*.sh`) and the documentation
+> (`*.md`). This file covers everything else.
+
 Everything in **`exports/`** (the STLs), **`renders/`** and **`photos/`** is
 licensed under a
 [Creative Commons Attribution 4.0 International License][cc-by] (CC BY 4.0).
