@@ -15,6 +15,37 @@ All three STLs render manifold. `exports/` is current.
 
 ---
 
+## Printed — 2026-09-07
+
+![The printed case, closed](photos/01-case-closed-port-window.jpg)
+
+| photo | |
+|---|---|
+| [01](photos/01-case-closed-port-window.jpg) | closed — the shared USB‑C + ON/OFF port window |
+| [02](photos/02-case-closed-lid-vents.jpg) | lid on — vents, LED gauge window, board visible through the slots |
+| [03](photos/03-open-lid-and-tray.jpg) · [04](photos/04-open-tray-populated.jpg) | open and populated |
+| [05](photos/05-esp32-devkitc-board.jpg) | the DevKitC — underside is flat, no downward pins (confirms `ESP_UNDER`) |
+| [06](photos/06-lipo-module-with-cell.jpg) | the module with its cell — stamped `JBC 103040PL` |
+
+**The case printed fine. The cell did not fit the bay built for it.**
+
+The one number this README flagged as a pure guess is the one that bit.
+`params.scad` assumed a `503450` pouch — 5.5 × 34 × 50 mm. The real cell is
+stamped **`103040`**: **10.0 × 30 × 40 mm**. Wrong in all three axes, and
+nearly twice the assumed thickness.
+
+So the middle bay sits empty and the cell rides on top of the module — that is
+the layout in photos 03–04, not what `case.scad` renders.
+
+`params.scad` now carries the real cell. **The geometry has not been rebuilt
+around it yet**, so `exports/` and `renders/` still show the three-bay layout.
+
+> `case.scad` does **not** `include <params.scad>` — it keeps its own copy of
+> every dimension, still carrying the old cell numbers and `ESP_L = 51.0`. Only
+> `sled.scad` reads `params.scad`. Fixing that is the next job.
+
+---
+
 ## Start here
 
 ```bash
@@ -161,7 +192,11 @@ Espressif DevKitC‑32E nominal, matching row 17 of
 > 51 × 28 mm for what it calls the same 38‑pin board. A real 38‑pin DevKitC is
 > 54.4 mm long. That pocket is likely 3.4 mm short.
 
-**Still guesses:** every Z dimension, and the entire cell size.
+**Measured off the part:** the cell — `103040`, so 10.0 × 30 × 40 mm, read
+straight off the pouch label. It was the biggest guess in the project and it
+was wrong in all three axes.
+
+**Still guesses:** every remaining Z dimension.
 
 `ESP_UNDER` is the one to watch. It assumes 3 mm of solder tail. If your
 DevKitC has male breadboard pins pointing **down**, the real figure is nearer

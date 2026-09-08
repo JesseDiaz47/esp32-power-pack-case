@@ -22,9 +22,12 @@ MOD_UNDER  =  3.00;   // G  longest solder tail poking out the back
 MOD_OVER   =  9.50;   // G  tallest thing on top (USB-A shell)
 
 // --- LiPo pouch cell --------------------------------------------------------
-CELL_L     = 50.00;   // G  \  assumed 503450. If the cell has a number
-CELL_W     = 34.00;   // G   > printed on it, that number IS the size --
-CELL_T     =  5.50;   // G  /  see the decoder in MEASURING.md
+//  REAL CELL, read off the label 2026-09-07: JBC 103040PL, 3.7 V 1200 mAh.
+//  The 6-digit number IS the size (MEASURING.md): 10.0 x 30 x 40 mm. The old
+//  503450 assumption was wrong in all three axes -- see "Printed" in README.md.
+CELL_L     = 40.00;   // M  was 50.00  (G, assumed 503450)
+CELL_W     = 30.00;   // M  was 34.00  (G)
+CELL_T     = 10.00;   // M  was  5.50  (G) -- nearly 2x the guess
 CELL_LEAD  = 60.00;   // G  usable length of the JST lead
 
 // --- ESP32 dev board --------------------------------------------------------
