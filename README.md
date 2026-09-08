@@ -56,9 +56,13 @@ All three STLs render manifold. `exports/` is current.
 </td>
 </tr>
 <tr>
-<td colspan="2" align="center">
+<td width="50%" align="center">
   <a href="photos/08-lipo-module-with-cell.jpg"><img src="photos/08-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
   <sub><b>The pack.</b> NULLLAB LiPo module with the pouch cell — USB‑C in, USB‑A + 3V3/5V out, 4‑LED gauge. The cell is stamped <code>JBC 103040PL</code>.</sub>
+</td>
+<td width="50%" align="center">
+  <a href="photos/09-hw131-power-board.jpg"><img src="photos/09-hw131-power-board.jpg" width="420" alt="HW-131 breadboard power supply"></a><br>
+  <sub><b>The third board.</b> <code>HW‑131</code> breadboard supply — barrel‑jack in, USB‑A out, a jumper per rail selecting 5V / OFF / 3.3V, and a power switch. It rides in the third bay but appears in no design file yet.</sub>
 </td>
 </tr>
 </table>
@@ -68,8 +72,8 @@ All three STLs render manifold. `exports/` is current.
 One plate, four parts, Bambu Textured PEI.
 
 <p align="center">
-  <a href="photos/09-plate-layout.png">
-    <img src="photos/09-plate-layout.png" width="720" alt="All four parts nested on one plate in Bambu Studio">
+  <a href="photos/10-plate-layout.png">
+    <img src="photos/10-plate-layout.png" width="720" alt="All four parts nested on one plate in Bambu Studio">
   </a>
 </p>
 
