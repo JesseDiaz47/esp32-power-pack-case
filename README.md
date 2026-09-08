@@ -17,28 +17,63 @@ All three STLs render manifold. `exports/` is current.
 
 ## Printed — 2026-09-07
 
-![The printed case, closed](photos/01-case-closed-port-window.jpg)
+<p align="center">
+  <a href="photos/01-case-closed-port-window.jpg">
+    <img src="photos/01-case-closed-port-window.jpg" width="720" alt="The printed case, closed">
+  </a><br>
+  <sub><b>Closed.</b> Chamfered edges, and the one port window that carries both the USB‑C charge input and the ON/OFF switch.</sub>
+</p>
 
-| photo | |
-|---|---|
-| [01](photos/01-case-closed-port-window.jpg) | closed — the shared USB‑C + ON/OFF port window |
-| [02](photos/02-case-closed-lid-vents.jpg) | lid on — vents, LED gauge window, board visible through the slots |
-| [03](photos/03-open-lid-and-tray.jpg) · [04](photos/04-open-tray-populated.jpg) | open and populated |
-| [05](photos/05-esp32-devkitc-board.jpg) | the DevKitC — underside is flat, no downward pins (confirms `ESP_UNDER`) |
-| [06](photos/06-lipo-module-with-cell.jpg) | the module with its cell — stamped `JBC 103040PL` |
+<table>
+<tr>
+<td width="50%" align="center">
+  <a href="photos/02-case-closed-lid-vents.jpg"><img src="photos/02-case-closed-lid-vents.jpg" width="420" alt="Lid on, vents and LED window"></a><br>
+  <sub><b>Lid on.</b> Vent slots over both boards and the square LED‑gauge window. <code>ESP-32D</code> is legible through the slots.</sub>
+</td>
+<td width="50%" align="center">
+  <a href="photos/03-open-lid-and-tray.jpg"><img src="photos/03-open-lid-and-tray.jpg" width="420" alt="Lid off beside the tray"></a><br>
+  <sub><b>Lid off.</b> Six M3 bosses, one at each corner and one mid‑span each side.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+  <a href="photos/04-open-tray-populated.jpg"><img src="photos/04-open-tray-populated.jpg" width="420" alt="Tray populated"></a><br>
+  <sub><b>Populated.</b> The NULLLAB module carries its cell; the ESP32 sits in its own bay.</sub>
+</td>
+<td width="50%" align="center">
+  <a href="photos/05-sled-printed-beside-case.jpg"><img src="photos/05-sled-printed-beside-case.jpg" width="420" alt="The printed sled beside the case"></a><br>
+  <sub><b>The sled, printed.</b> Hex‑lightened deck, zones engraved <code>MODULE</code> / <code>CELL</code> / <code>ESP32</code>, marked <code>v0.2</code> — printed in one colour rather than black deck + orange rails.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+  <a href="photos/06-case-on-sled.jpg"><img src="photos/06-case-on-sled.jpg" width="420" alt="The case resting on the sled"></a><br>
+  <sub><b>Case on sled.</b> The sled is the larger footprint of the two — 76 × 129.9 mm against the case's 72.8 × 117.8.</sub>
+</td>
+<td width="50%" align="center">
+  <a href="photos/07-esp32-devkitc-board.jpg"><img src="photos/07-esp32-devkitc-board.jpg" width="420" alt="ESP32-WROOM-32 DevKitC"></a><br>
+  <sub><b>The board.</b> ESP32‑WROOM‑32 DevKitC, 38‑pin. Underside is flat — no downward breadboard pins, which is what <code>ESP_UNDER</code> assumes.</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+  <a href="photos/08-lipo-module-with-cell.jpg"><img src="photos/08-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
+  <sub><b>The pack.</b> NULLLAB LiPo module with the pouch cell — USB‑C in, USB‑A + 3V3/5V out, 4‑LED gauge. The cell is stamped <code>JBC 103040PL</code>.</sub>
+</td>
+<td width="50%" align="center">
+</td>
+</tr>
+</table>
 
-**The case printed fine. The cell did not fit the bay built for it.**
+### One number to fix
 
-The one number this README flagged as a pure guess is the one that bit.
-`params.scad` assumed a `503450` pouch — 5.5 × 34 × 50 mm. The real cell is
-stamped **`103040`**: **10.0 × 30 × 40 mm**. Wrong in all three axes, and
-nearly twice the assumed thickness.
+`params.scad` assumed a `503450` pouch — 5.5 × 34 × 50 mm. The cell in the
+photos above is stamped **`103040`**: **10.0 × 30 × 40 mm**. Wrong in all three
+axes, and nearly twice the assumed thickness, so the cell rides on top of the
+module instead of dropping into the bay cut for it.
 
-So the middle bay sits empty and the cell rides on top of the module — that is
-the layout in photos 03–04, not what `case.scad` renders.
-
-`params.scad` now carries the real cell. **The geometry has not been rebuilt
-around it yet**, so `exports/` and `renders/` still show the three-bay layout.
+`params.scad` now carries the real numbers. **The geometry has not been rebuilt
+around them yet**, so `exports/` and `renders/` still show the three-bay layout.
 
 > `case.scad` does **not** `include <params.scad>` — it keeps its own copy of
 > every dimension, still carrying the old cell numbers and `ESP_L = 51.0`. Only
