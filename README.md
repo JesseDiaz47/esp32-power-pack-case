@@ -288,3 +288,18 @@ Neither applies to the sled. That's the point of the sled.
    it's ~45 mm of routing.
 4. Confirm the USB‑A is edge-facing, not vertical.
 5. Print the base alone before committing to the lid.
+
+---
+
+## License
+
+Two licences, because this repo holds two different kinds of thing.
+
+| | what | licence |
+|---|---|---|
+| **Source** | `*.scad`, `*.sh`, `*.md` | [MIT](LICENSE) |
+| **Models & images** | `exports/`, `renders/`, `photos/` | [CC BY 4.0](LICENSE-MODELS.md) |
+
+Print it, remix it, sell what you print — just credit Jesse Diaz and link back
+here. The `.scad` source is MIT, so it can be vendored into other projects on
+the terms code ecosystems already expect.
