@@ -41,29 +41,60 @@ All three STLs render manifold. `exports/` is current.
   <sub><b>Populated.</b> The NULLLAB module carries its cell; the ESP32 sits in its own bay.</sub>
 </td>
 <td width="50%" align="center">
-  <a href="photos/05-sled-printed-beside-case.jpg"><img src="photos/05-sled-printed-beside-case.jpg" width="420" alt="The printed sled beside the case"></a><br>
+  <a href="photos/06-sled-printed-beside-case.jpg"><img src="photos/06-sled-printed-beside-case.jpg" width="420" alt="The printed sled beside the case"></a><br>
   <sub><b>The sled, printed.</b> Hex‑lightened deck, zones engraved <code>MODULE</code> / <code>CELL</code> / <code>ESP32</code>, marked <code>v0.2</code> — printed in one colour rather than black deck + orange rails.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
-  <a href="photos/06-case-on-sled.jpg"><img src="photos/06-case-on-sled.jpg" width="420" alt="The case resting on the sled"></a><br>
+  <a href="photos/07-case-on-sled.jpg"><img src="photos/07-case-on-sled.jpg" width="420" alt="The case resting on the sled"></a><br>
   <sub><b>Case on sled.</b> The sled is the larger footprint of the two — 76 × 129.9 mm against the case's 72.8 × 117.8.</sub>
 </td>
 <td width="50%" align="center">
-  <a href="photos/07-esp32-devkitc-board.jpg"><img src="photos/07-esp32-devkitc-board.jpg" width="420" alt="ESP32-WROOM-32 DevKitC"></a><br>
+  <a href="photos/08-esp32-devkitc-board.jpg"><img src="photos/08-esp32-devkitc-board.jpg" width="420" alt="ESP32-WROOM-32 DevKitC"></a><br>
   <sub><b>The board.</b> ESP32‑WROOM‑32 DevKitC, 38‑pin. Underside is flat — no downward breadboard pins, which is what <code>ESP_UNDER</code> assumes.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
-  <a href="photos/08-lipo-module-with-cell.jpg"><img src="photos/08-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
+  <a href="photos/09-lipo-module-with-cell.jpg"><img src="photos/09-lipo-module-with-cell.jpg" width="420" alt="NULLLAB module with the pouch cell"></a><br>
   <sub><b>The pack.</b> NULLLAB LiPo module with the pouch cell — USB‑C in, USB‑A + 3V3/5V out, 4‑LED gauge. The cell is stamped <code>JBC 103040PL</code>.</sub>
 </td>
 <td width="50%" align="center">
+  <a href="photos/05-tray-populated-top-down.jpg"><img src="photos/05-tray-populated-top-down.jpg" width="420" alt="All three bays filled, top down"></a><br>
+  <sub><b>All three bays filled.</b> The NULLLAB module with its cell, the ESP32, and an <code>HW‑131</code> breadboard supply — barrel‑jack in, USB‑A and 3V3/5V rails out. The HW‑131 is not in <code>params.scad</code>.</sub>
 </td>
 </tr>
 </table>
+
+### Print
+
+One plate, four parts, Bambu Textured PEI.
+
+<p align="center">
+  <a href="photos/10-plate-layout.png">
+    <img src="photos/10-plate-layout.png" width="720" alt="All four parts nested on one plate in Bambu Studio">
+  </a>
+</p>
+
+| part | size (mm) | volume | PLA, solid |
+|---|---|---|---|
+| `base` | 72.8 × 117.8 × 17.0 | 33,022 mm³ | 41.0 g |
+| `lid` | 72.8 × 117.8 × 2.4 | 18,793 mm³ | 23.3 g |
+| `plate` (sled) | 76.0 × 129.9 × 10.0 | 27,536 mm³ | 34.2 g |
+| `rail` × 2 | 8.0 × 129.9 × 3.5 | 3,209 mm³ ea | 4.0 g ea |
+| **case** — base + lid | | 51,815 mm³ | **64.3 g** |
+| **sled** — plate + 2 rails | | 33,955 mm³ | **42.1 g** |
+| **whole plate** | | 85,769 mm³ | **106.4 g** |
+
+Volumes are computed from the exported STLs, not estimated — the `rail` figure
+matches Bambu Studio's own part inspector to the tenth of a mm³ (3209.1 mm³,
+1096 triangles). Mass is volume × 1.24 g/cm³, **PLA at 100 % solid**, so read
+it as an upper bound; any real wall/infill profile lands under it.
+
+**Slicer estimate:** `[TIME]` · `[FILAMENT g]` — not yet recorded. These come
+off the Bambu slice panel and depend on the profile, so they are left blank
+rather than guessed.
 
 ### One number to fix
 
