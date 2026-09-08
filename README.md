@@ -1,5 +1,12 @@
 # ESP32 Power Pack Case
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Models: CC BY 4.0](https://img.shields.io/badge/models-CC%20BY%204.0-ef9421.svg?style=flat-square)](LICENSE-MODELS.md)
+[![CAD: OpenSCAD](https://img.shields.io/badge/CAD-OpenSCAD-f9d72c.svg?style=flat-square&logo=openscad&logoColor=black)](case.scad)
+[![STLs: 4 parts](https://img.shields.io/badge/STLs-4%20parts-1f6feb.svg?style=flat-square)](exports/)
+[![Status: v0.1 fit test](https://img.shields.io/badge/status-v0.1%20fit%20test-orange.svg?style=flat-square)](#printed--2026-09-07)
+[![Last commit](https://img.shields.io/github/last-commit/JesseDiaz47/esp32-power-pack-case?style=flat-square)](https://github.com/JesseDiaz47/esp32-power-pack-case/commits/main)
+
 Mounts the **NULLLAB LiPo module** (1200 mAh, USB‑C in, USB‑A + 3V3/5V out,
 4‑LED gauge), its **LiPo pouch cell**, and an **ESP32‑WROOM‑32 DevKitC‑V4**
 (38‑pin, 54.4 × 27.9 mm) — the same board as `~/Code/quadruped-r1`.
